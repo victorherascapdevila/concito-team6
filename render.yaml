@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: concito-team6-sprint2
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeployTrigger: commit

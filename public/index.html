@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FCFAF6">
+  <meta name="description" content="Explore food climate footprints and calculate a meal with The Big Climate Database.">
+  <title>The Big Climate Database | CONCITO</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="site-root" id="site-root" data-view="home">
+    <header class="site-header">
+      <a class="header-brand" href="#home" aria-label="CONCITO — Home">
+        <img src="/assets/concito-footer-logo.png" alt="CONCITO">
+      </a>
+      <a class="header-title" href="#home">
+        <span>THE BIG</span> <span class="green-word">CLIMATE</span> <span>DATABASE</span>
+      </a>
+      <nav class="header-actions" aria-label="Main navigation">
+        <a href="#calculator" class="soft-button">Calculate a meal</a>
+        <a href="#about" class="soft-button">About</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="page home-page" id="home-view" aria-label="Food database">
+        <div class="landing-visual" aria-hidden="true">
+          <img src="/assets/hero-foods.png" alt="">
+        </div>
+
+        <div class="home-filters">
+          <div class="filter-pair">
+            <label class="visually-hidden" for="category">Select Category</label>
+            <select id="category" disabled><option value="all">Select Category</option></select>
+            <label class="visually-hidden" for="country">Select Country</label>
+            <select id="country" disabled>
+              <option value="all">Select Country</option>
+              <option value="DK">Denmark</option>
+              <option value="ES">Spain</option>
+              <option value="FR">France</option>
+              <option value="GB">Great Britain</option>
+              <option value="NL">Netherlands</option>
+            </select>
+          </div>
+          <label class="search-panel">
+            <span class="visually-hidden">Search for a food</span>
+            <input id="search" type="search" placeholder="Search..." autocomplete="off" disabled>
+            <svg aria-hidden="true" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><circle cx="13" cy="13" r="9"/><path d="m20 20 9 9"/></svg>
+          </label>
+        </div>
+
+        <div class="table-heading" aria-hidden="true">
+          <span>Category</span><span>Product</span><span>Country</span><span>Total Co2</span><span></span>
+        </div>
+
+        <div class="home-results-panel">
+          <div id="error" class="data-warning hidden" role="status"></div>
+          <div id="results" class="results" aria-live="polite">
+            <div class="loading-placeholder">Loading food records…</div>
+          </div>
+          <button id="more-results" class="more-results hidden" type="button">Show more foods</button>
+          <div class="data-status">
+            <span id="source-status" class="source-status">Loading official data…</span>
+            <span id="source-meta"></span>
+            <button id="refresh" type="button" class="refresh-link">Refresh data</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page calculator-page hidden" id="calculator-view" aria-label="Meal calculator">
+        <h1 class="accent-title calculator-title">Calculate your meal
+          <svg class="meal-title-icon" width="70" height="70" viewBox="0 0 70 70" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+            <path d="m35 4 8 8h12v12l8 11-8 11v12H43l-8 8-8-8H15V46L7 35l8-11V12h12z" />
+            <path d="M24 23v17M20 23v9M28 23v9M24 40v10M42 22v28M42 22c9 6 9 17 0 22" stroke-linecap="round"/>
+          </svg>
+        </h1>
+        <div class="calculator-intro-box">
+          This is the meal calculator!<br>
+          Here you can find out how much CO2 your meal releases.<br>
+          You just have to fill out the ingredients in your meal and how much you’re using of each ingredient.<br>
+          Then we’ll calculate the amount of CO2 for you!
+        </div>
+        <img class="meal-plate" src="/assets/meal-plate.png" alt="Illustration of a meal on a plate with cutlery">
+        <h2 class="calculator-form-title">Type in your ingredients</h2>
+        <div class="calculator-form-wrap">
+          <aside class="calculator-placeholder meal-scene" aria-label="Animated meal illustration">
+            <span class="meal-scene-sun" aria-hidden="true"></span>
+            <div class="meal-scene-eyebrow" aria-hidden="true"><span class="meal-scene-dot"></span> YOUR MEAL, YOUR IMPACT</div>
+            <div class="meal-scene-stage" aria-hidden="true">
+              <span class="meal-scene-orbit"></span>
+              <span class="meal-scene-orbit-inner"></span>
+              <img class="meal-scene-produce scene-fruit" src="/assets/category-fruits.png" alt="">
+              <img class="meal-scene-produce scene-veggie" src="/assets/category-vegetables-figma.png" alt="">
+              <img class="meal-scene-produce scene-sweet" src="/assets/category-sweets.png" alt="">
+              <img class="meal-scene-crate" src="/assets/footer-foods.png" alt="">
+              <span class="meal-scene-spark spark-one"></span>
+              <span class="meal-scene-spark spark-two"></span>
+              <span class="meal-scene-spark spark-three"></span>
+            </div>
+            <div class="meal-scene-bottom">
+              <div class="meal-scene-divider" aria-hidden="true"></div>
+              <div class="meal-scene-stats"><span class="meal-scene-number" id="meal-visual-count">0</span><span><strong>ingredients selected</strong><small>Build your own climate score</small></span></div>
+              <div class="meal-scene-progress" aria-hidden="true"><span id="meal-visual-progress"></span></div>
+              <div class="meal-scene-steps" aria-hidden="true"><span>CHOOSE</span><span>MEASURE</span><span>CALCULATE</span></div>
+            </div>
+          </aside>
+          <form id="meal-form" class="meal-form" novalidate>
+            <div id="calculator-rows" class="calculator-rows"></div>
+            <div class="calculator-controls">
+              <button id="add-row" type="button" class="orange-button add-row-button" aria-label="Add another ingredient row">
+                <svg aria-hidden="true" viewBox="0 0 40 40" width="35" height="35" fill="none" stroke="white" stroke-width="2.5"><path d="M20 5v30M5 20h30"/></svg>
+              </button>
+              <button class="orange-button calculate-button" type="submit">Calculate</button>
+            </div>
+            <p id="calculator-error" class="form-error" role="alert" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="page score-page hidden" id="results-view" aria-label="Meal climate score">
+        <h1 class="accent-title score-title">The score</h1>
+        <a href="#calculator" class="back-button" aria-label="Back to meal calculator">
+          <svg width="38" height="32" viewBox="0 0 38 32" fill="none" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M33 16H5M16 5 5 16l11 11"/></svg>
+        </a>
+        <div class="score-overview">
+          <h2>Your meal releases:</h2>
+          <div class="score-total" aria-live="polite">
+            <div class="total-number-line"><span id="score-total-number">0.000</span> <span class="co2-mark">CO<sub>2</sub></span></div>
+            <div class="total-label">IN TOTAL</div>
+          </div>
+        </div>
+        <div class="score-panel">
+          <div class="score-table-header">
+            <span>Ingredients</span><span>Amount</span><span>Total CO2</span>
+          </div>
+          <div id="score-ingredients" class="score-ingredients"></div>
+          <a href="#calculator" class="score-recalculate">Recalculate</a>
+        </div>
+      </section>
+
+      <section class="page about-page hidden" id="about-view" aria-label="About the database">
+        <h1 class="accent-title about-title">About the big climate database</h1>
+        <div class="about-placeholder about-scene" role="img" aria-label="Illustration of food ingredients connected to climate information">
+          <div class="about-scene-copy" aria-hidden="true">
+            <span class="about-scene-eyebrow"><span></span> EXPLORE THE IMPACT</span>
+            <span class="about-scene-heading">From food to<br><em>climate insight.</em></span>
+            <span class="about-scene-description">Discover the footprint of what we eat.</span>
+            <div class="about-scene-rule"></div>
+            <span class="about-scene-footnote">FOOD <span>✳</span> DATA <span>✳</span> CLIMATE</span>
+          </div>
+          <span class="about-scene-halo" aria-hidden="true"></span>
+          <span class="about-scene-halo halo-two" aria-hidden="true"></span>
+          <img class="about-scene-illustration" src="/assets/footer-foods.png" alt="" aria-hidden="true">
+          <img class="about-scene-fruit" src="/assets/category-fruits.png" alt="" aria-hidden="true">
+          <img class="about-scene-veg" src="/assets/category-vegetables-figma.png" alt="" aria-hidden="true">
+          <span class="about-scene-impact" aria-hidden="true"><span class="impact-icon"><svg viewBox="0 0 56 56" width="47" height="47" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="2.5" stroke-dasharray="3 5"/><path d="M28 9C18 21 20 31 29 34c8 2 15-8 12-21-6 1-11 5-13 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>CO₂e<br><small>FOOD FOOTPRINT</small></span></span>
+        </div>
+        <div class="about-copy">
+          <p>The big CLIMATE DATABASE was made for <a href="https://concito.dk/denstoreklimadatabase" target="_blank" rel="noreferrer">CONCITO</a> by <a href="https://2-0-lca.com/" target="_blank" rel="noreferrer">2-0 LCA</a> in February 2021 and was awarded the <a href="https://www.norden.org/en/nordic-council-environment-prize" target="_blank" rel="noreferrer">Nordic Council Environment Prize</a>.</p>
+          <p>The newest version (V1.2) from 2024 includes life cycle GHG emissions for 540 food products in the market for Denmark (DK), Great Britain (GB), France (FR), Spain (ES), and the Netherlands (NL).</p>
+          <p>The DK version is updated with money from the prize, whereas the GB version is funded by <a href="https://zedible.io/" target="_blank" rel="noreferrer">Zedible</a>, and the FR, ES, and NL versions are funded by 2-0 LCA.</p>
+        </div>
+        <h2 class="accent-title documentation-title">Documentation</h2>
+        <a class="orange-button document-button" target="_blank" rel="noopener noreferrer" href="https://www.thebigclimatedatabase.com/static/core/pdfs/Methodology_report_the_big_CLIMATE_DATABASE_FINAL.pdf">Download Methodology Report (PDF)</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a href="#home" class="footer-concito-link" aria-label="CONCITO home">
+        <img src="/assets/concito-footer-logo.png" alt="CONCITO" class="footer-concito">
+      </a>
+      <img src="/assets/lca-footer-logo.png" alt="2-0 LCA" class="footer-lca">
+      <img src="/assets/footer-foods.png" alt="Illustration of fruits, vegetables and food in a wooden crate" class="footer-illustration">
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#about" class="soft-button">About</a>
+        <a href="https://creativecommons.org/licenses/by/4.0/" class="soft-button" target="_blank" rel="noreferrer"><span>Licence: CC-BY</span></a>
+        <a href="#calculator" class="soft-button">Calculate a meal</a>
+      </nav>
+    </footer>
+  </div>
+  <script src="/js/app.js"></script>
+</body>
+</html>

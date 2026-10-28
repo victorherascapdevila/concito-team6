@@ -1,0 +1,13 @@
+{
+  "name": "concito-food-search",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CONCITO Group 6 — Sprint 2 Figma UI with official Big Climate Database food search and meal footprint calculator.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

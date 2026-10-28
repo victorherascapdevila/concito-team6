@@ -1,0 +1,18 @@
+{
+  "database_source": "https://thebigclimatedatabase.com",
+  "concito_source": "https://concito.dk/denstoreklimadatabase",
+  "implementation_note": "The application loads food values live from The Big Climate Database. The CONCITO URL is retained as the official project/source reference.",
+  "expected_source_columns": [
+    "Product Name (t CO2e/t)",
+    "Country",
+    "Category",
+    "Total",
+    "Agriculture",
+    "ILUC",
+    "Processing",
+    "Packaging",
+    "Transport",
+    "Retail",
+    "Id"
+  ]
+}
